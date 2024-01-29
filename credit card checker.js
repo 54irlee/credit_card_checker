@@ -27,12 +27,12 @@ const batch = [valid1, valid2, valid3, valid4, valid5,
 
 const validateCred = cardNumber => {
     let firstTotal = 0;
-    for (let i = cardNumber.length - 1; i >= 0; i -=2) {
+    for (let i = cardNumber.length - 1; i >= 0; i -= 2) {
         firstTotal = firstTotal + cardNumber[i];
     }
 
     let secondTotal = 0;
-    for (let i = cardNumber.length - 2; i >= 0; i -=2) {
+    for (let i = cardNumber.length - 2; i >= 0; i -= 2) {
         secondTotal = secondTotal + (cardNumber[i] * 2 >= 10 ? (cardNumber[i] * 2) - 9 : cardNumber[i] * 2);
     }
 
@@ -44,14 +44,46 @@ const validateCred = cardNumber => {
 const findInvalidCards = cardsDetails => {
     let listOfInvalid = [];
     for (let i = 0; i < cardsDetails.length; i++) {
-        if(!validateCred(cardsDetails[i])) {
+        if (!validateCred(cardsDetails[i])) {
             listOfInvalid.push(cardsDetails[i]);
         }
     }
     return listOfInvalid;
 }
 
-console.log(findInvalidCards(batch));
+const idInvalidCardCompanies = creditCardsNo => {
+    let companyWithInvalidCards = [];
+    for (let i = 0; i < creditCardsNo.length; i++) {
+        switch (creditCardsNo[i][0]) {
+            case 3:
+                if (!companyWithInvalidCards.includes("Amex (American Express")) {
+                    companyWithInvalidCards.push("Amex (American Express");
+                }
+                break;
+            case 4:
+                if (!companyWithInvalidCards.includes("Visa")) {
+                    companyWithInvalidCards.push("Visa");
+                }
+                break;
+            case 5:
+                if (!companyWithInvalidCards.includes("Mastercard")) {
+                    companyWithInvalidCards.push("Mastercard");
+                }
+                break;
+            case 6:
+                if (!companyWithInvalidCards.includes("Discover")) {
+                    companyWithInvalidCards.push("Discover");
+                }
+                break;
+            default:
+                if (!companyWithInvalidCards.includes("Company not found")) {
+                    companyWithInvalidCards.push("Company not found");
+                }
+        }
+    }
+    return companyWithInvalidCards;
+}
+
 
 
 
